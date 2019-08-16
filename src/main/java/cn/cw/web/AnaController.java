@@ -72,7 +72,7 @@ public class AnaController {
     }
 
     /**
-     * 根据分类ID、搜索 获取语录
+     * 根据分类ID、搜索获取语录
      * 参数:anaTypeId searchName pageNo pageSize
      */
     @PostMapping("/getAnaList")
