@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Signin Template for Bootstrap</title>
+		<!-- Bootstrap core CSS -->
+		<link href="../static/css/bootstrap.min.css" th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="../static/css/signin.css" th:href="@{/static/css/signin.css}" rel="stylesheet">
+		<style>
+			.checkCode{
+				display: inline-block;
+				width: 55%;
+			}
+		</style>
+	</head>
+
+	<body class="text-center">
+		<form class="form-signin" action="/user/doLogin" th:action="@{/user/doLogin}" method="post">
+			<h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
+			<br/>
+			<label class="sr-only">Username</label>
+			<input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="userName">
+
+			<br/>
+
+			<label class="sr-only">Password</label>
+			<input type="password" class="form-control" placeholder="Password" required="" name="password">
+
+
+			<img src="/user/checkCode" th:src="@{/user/checkCode}">
+			<input type="text" class="form-control checkCode" placeholder="CheckCode" required="" name="checkCode" >
+
+			<br/><br/>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+			<p class="mt-5 mb-3 text-muted">© 2019-2020</p>
+
+			<input id="file" type="file" style="width: 70%;margin-left: 5%" /><br/><br/>
+			<a href="/user/export" th:href="@{/user/export}"><input id="export" type="button" value="导出" class="btn btn-lg btn-primary"/></a>
+			<input id="upLoad" type="button" value="上传" class="btn btn-lg btn-primary"/>
+			<button onclick="downLoad()" class="btn btn-lg btn-primary">下载</button>
+		</form>
+
+	</body>
+
+</html>
+
+<script type="text/javascript" src="../static/js/jquery-1.12.4.min.js"></script>
+
+<script type="text/javascript">
+
+	var filePath;
+
+	function downLoad(){
+		//需要先上传文件，下载只能下载部署服务器上的文件
+		if(filePath==null || filePath == ""){
+			alert("请先上传文件!")
+		}else{
+			window.open("/downLoadFile?fileName="+filePath);
+		}
+	}
+
+	$(function () {
+
+		/*异步上传文件*/
+		$('#upLoad').click(function () {
+			var formData = new FormData();
+			formData.append('file', $("#file")[0].files[0]);
+			$.ajax({
+				url: '/uploadImg',
+				type: 'POST',
+				cache: false,
+				data: formData,
+				processData: false,
+				contentType: false
+			}).done(function(res) {
+				var result = JSON.parse(res)
+				if(result.message=="SUCCESS"){
+					alert("上传成功");
+					filePath = result.data;
+				}else{
+					alert(result.message);
+				}
+				console.log(result.data);
+			}).fail(function(res) {
+
+			});
+		})
+
+	})
+
+
+
+
+</script>

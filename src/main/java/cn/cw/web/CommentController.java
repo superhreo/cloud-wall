@@ -1,0 +1,66 @@
+package cn.cw.web;
+
+import cn.cw.core.Result;
+import cn.cw.core.ResultGenerator;
+import cn.cw.core.ResultPages;
+import cn.cw.service.CommentService;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: _Cps
+ * Date: 2019.08.02 14:25
+ */
+@Controller
+@ResponseBody
+@RequestMapping("/comment")
+public class CommentController {
+
+    @Resource
+    CommentService commentService;
+
+    /**
+     *  评论语录
+     * 	参数:comment
+     */
+    @PostMapping("/addComment")
+    Result addComment(@RequestBody JSONObject object){
+        Result result = null;
+        Integer num = commentService.addComment(object);
+        if(num == 1){
+            result = ResultGenerator.genSuccessResult("评论成功!");
+        }else{
+            result = ResultGenerator.genFailResult("评论失败!");
+        }
+        return result;
+    }
+
+    /**
+     *  根据语录ID 获取当前语录的评论、分页 -- 这里需要userId 主要是看是否点过赞、评论过，我们将从前端传过来，不传也可以，就是没登陆的意思，也能查询到数据，只不过点赞和评论都为0
+     * 	参数:anaId pageNo pageSize
+     */
+    @PostMapping("/getCommentList")
+    Result getCommentList(@RequestBody JSONObject object){
+        Integer pageNo = object.getInteger("pageNo");
+        Integer pageSize = object.getInteger("pageSize");
+        if(pageNo == null || pageSize == null){
+            pageNo = 1;
+            pageSize = 10;
+        }
+        PageHelper.startPage(pageNo,pageSize);
+        List<JSONObject> list = commentService.getCommentList(object);
+        PageInfo<JSONObject> pageInfo = new PageInfo<JSONObject>(list);
+        return ResultGenerator.genSuccessResult(new ResultPages<JSONObject>(pageInfo));
+    }
+
+}

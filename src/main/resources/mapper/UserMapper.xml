@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cw.dao.UserMapper">
+
+    <!-- 封装返回结果resultMap -->
+    <resultMap id="userResultMap" type="com.alibaba.fastjson.JSONObject">
+        <id property="id" column="id"/>
+        <id property="userName" column="user_name"/>
+        <!-- 这里密码就不返回给前台了 -->
+        <!-- <id property="userPassword" column="user_password"/> -->
+        <id property="userMobile" column="user_mobile"/>
+        <id property="userSex" column="user_sex"/>
+        <id property="userSignature" column="user_signature"/>
+        <id property="createDate" column="create_date"/>
+        <id property="userDisabled" column="user_disabled"/>
+    </resultMap>
+
+    <!-- 添加用户 -->
+    <insert id="addUser">
+        INSERT INTO `user` (`user_name`,`user_password`,`user_mobile`,`create_date`) VALUES (#{userName},#{userPassword},#{userMobile},now());
+    </insert>
+
+    <!-- 用户登录 -->
+    <select id="userLogin" resultMap="userResultMap">
+        SELECT `id`,`user_name`,`user_mobile`,`user_sex`,`user_signature`,`create_date`,`user_disabled`
+        FROM `user`
+        WHERE user_name = #{userName} and user_password = #{userPassword}
+    </select>
+
+    <!-- 查询用户列表 searchName userSex userDisabled -->
+    <select id="getUserList" resultMap="userResultMap">
+        select `id`,`user_name`,`user_mobile`,`user_sex`,`user_signature`,`create_date`,`user_disabled`
+        FROM `user`
+        <where>
+            <if test="searchName != '' and searchName != null">
+                (`user_name` like CONCAT('%',#{searchName},'%') or `user_mobile` like CONCAT('%',#{searchName},'%'))
+            </if>
+            <if test="userSex != '' and userSex != null">
+                and `user_sex` = #{userSex}
+            </if>
+            <if test="userDisabled != '' and userDisabled != null">
+                and `user_disabled` = #{userDisabled}
+            </if>
+        </where>
+    </select>
+
+</mapper>
