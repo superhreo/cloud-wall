@@ -16,9 +16,13 @@
         <id property="userDisabled" column="user_disabled"/>
     </resultMap>
 
+    <!-- 验证账号是否被注册 -->
+    <select id="userNameCheckIsRegister" resultType="java.lang.Integer">
+        SELECT COUNT(0) FROM `user` WHERE user_name = #{userName}
+    </select>
     <!-- 添加用户 -->
-    <insert id="addUser">
-        INSERT INTO `user` (`user_name`,`user_password`,`user_mobile`,`create_date`) VALUES (#{userName},#{userPassword},#{userMobile},now());
+    <insert id="userRegister">
+        INSERT INTO `user` (`user_name`,`user_password`,`user_mobile`,`create_date`) VALUES (#{userName},#{userPassword},#{userMobile},NOW());
     </insert>
 
     <!-- 用户登录 -->

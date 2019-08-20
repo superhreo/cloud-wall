@@ -5,9 +5,9 @@
 <modelVersion>4.0.0</modelVersion>
 
 <groupId>cn</groupId>
-<artifactId>spring-boot-test</artifactId>
+<artifactId>cloud-wall</artifactId>
 <version>1.0</version>
-<packaging>jar</packaging>
+<packaging>war</packaging>
 
 <properties>
     <java.version>1.8</java.version>
@@ -152,15 +152,16 @@
 <build>
     <plugins>
         <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.0.0</version>
         </plugin>
         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.3</version>
             <configuration>
-                <source>${java.version}</source>
-                <target>${java.version}</target>
-                <encoding>UTF-8</encoding>
+                <source>1.8</source>
+                <target>1.8</target>
             </configuration>
         </plugin>
     </plugins>

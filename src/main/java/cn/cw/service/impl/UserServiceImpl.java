@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     public UserMapper userMapper;
 
     @Override
-    public Integer addUser(JSONObject user) {
-        return userMapper.addUser(user);
+    public Integer userRegister(JSONObject user) {
+        return userMapper.userRegister(user);
     }
 
     @Override
@@ -30,5 +30,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<JSONObject> getUserList(JSONObject object) {
         return userMapper.getUserList(object);
+    }
+
+    @Override
+    public Integer userNameCheckIsRegister(JSONObject user) {
+        return userMapper.userNameCheckIsRegister(user);
     }
 }

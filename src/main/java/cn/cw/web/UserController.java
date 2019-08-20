@@ -29,15 +29,32 @@ public class UserController{
     public UserService userService;
 
     /**
+     * 验证账号是否被注册
+     * @param user
+     * @return
+     */
+    @PostMapping("/userNameCheckIsRegister")
+    Result userNameCheckIsRegister(@RequestBody JSONObject user){
+        Result result = null;
+        Integer count = userService.userNameCheckIsRegister(user);
+        if(count == 0){
+            result = ResultGenerator.genSuccessResult("账号可以使用!");
+        }else{
+            result = ResultGenerator.genFailResult("账号已被使用!");
+        }
+        return result;
+    }
+
+    /**
      * 添加用户
      * 参数 user
      */
-    @PostMapping("/addUser")
-    public Result addUser(@RequestBody JSONObject user){
+    @PostMapping("/userRegister")
+    public Result userRegister(@RequestBody JSONObject user){
         //加密密码
         user.put("userPassword",MD5Util.getMD5String(user.getString("userPassword")));
         Result result = null;
-        Integer num = userService.addUser(user);
+        Integer num = userService.userRegister(user);
         if(num == 1){
             result = ResultGenerator.genSuccessResult("注册成功!");
         }else{
@@ -56,8 +73,8 @@ public class UserController{
         Result result = null;
         JSONObject u = userService.userLogin(user);
         if(u != null){
-            session.setAttribute("userSession",u);//放入session中
             if(0 == u.getInteger("userDisabled")){
+                session.setAttribute("userSession",u);//放入session中
                 result = ResultGenerator.genSuccessResult(u);
             }else{
                 result = ResultGenerator.genFailResult("您的账号已被限制登陆，请联系管理员!");

@@ -12,9 +12,11 @@ import java.util.List;
  */
 public interface UserMapper {
 
-    Integer addUser(JSONObject user);
+    Integer userRegister(JSONObject user);
 
     JSONObject userLogin(JSONObject user);
 
     List<JSONObject> getUserList(JSONObject object);
+
+    Integer userNameCheckIsRegister(JSONObject user);
 }
