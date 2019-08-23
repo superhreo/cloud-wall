@@ -13,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author _Cps
@@ -27,6 +30,25 @@ public class UserController{
 
     @Resource
     public UserService userService;
+
+    /**
+     * 访问记录
+     * 参数 user
+     */
+    @RequestMapping("/visit")
+    public Result visit(HttpServletRequest request){
+        String ip = IpUtil.getIpAddr(request);
+        String address = IpUtil.getRealAddressByIP(ip);
+        String device = DeviceUtil.deviceInfo(request);
+        Result result = null;
+        Integer num = userService.visit(ip,address,device);
+        if(num == 1){
+            result = ResultGenerator.genSuccessResult(address);
+        }else{
+            result = ResultGenerator.genFailResult("访问失败!");
+        }
+        return result;
+    }
 
     /**
      * 验证账号是否被注册
@@ -105,6 +127,23 @@ public class UserController{
         List<JSONObject> list = userService.getUserList(object);
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(new ResultPages(pageInfo));
+    }
+
+    /**
+     * 添加用户
+     * 参数 user
+     */
+    @PostMapping("/userPrize")
+    public Result userPrize(@RequestBody JSONObject prize){
+        //加密密码
+        Result result = null;
+        Integer num = userService.userPrize(prize);
+        if(num == 1){
+            result = ResultGenerator.genSuccessResult("注册成功!");
+        }else{
+            result = ResultGenerator.genFailResult("注册失败!");
+        }
+        return result;
     }
 
 //

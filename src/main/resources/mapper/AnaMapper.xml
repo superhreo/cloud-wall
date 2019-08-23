@@ -45,6 +45,7 @@
               and (a.ana_title LIKE CONCAT('%',#{searchName},'%') OR a.ana_content LIKE CONCAT('%',#{searchName},'%') OR a.ana_from LIKE CONCAT('%',#{searchName},'%') )
           </if>
         </where>
+        ORDER BY a.`create_date` DESC,a.`id` DESC
     </select>
 
     <!-- 根据语录ID 获取上条语录 -->

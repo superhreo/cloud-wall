@@ -16,10 +16,16 @@
         <id property="userDisabled" column="user_disabled"/>
     </resultMap>
 
+    <!-- 用户访问 -->
+    <insert id="visit">
+        INSERT INTO `cloud_wall`.`visit` (`visit_ip`,`visit_address`,`visit_device`,`create_date`) VALUES (#{ip},#{address},#{device},NOW());
+    </insert>
+
     <!-- 验证账号是否被注册 -->
     <select id="userNameCheckIsRegister" resultType="java.lang.Integer">
         SELECT COUNT(0) FROM `user` WHERE user_name = #{userName}
     </select>
+
     <!-- 添加用户 -->
     <insert id="userRegister">
         INSERT INTO `user` (`user_name`,`user_password`,`user_mobile`,`create_date`) VALUES (#{userName},#{userPassword},#{userMobile},NOW());
@@ -48,5 +54,19 @@
             </if>
         </where>
     </select>
+
+    <!-- 用户点赞 -->
+    <insert id="userPrize">
+        INSERT INTO `cloud_wall`.`prize` (`user_id`,`ana_id`,`create_date`) VALUES(#{userId},#{anaId},NOW());
+    </insert>
+
+    <!-- 批量点赞 -->
+    <insert id="userPrizeList">
+        INSERT INTO `cloud_wall`.`prize` (`user_id`,`ana_id`,`create_date`) VALUES
+        <foreach collection="list" item="prize" separator=",">
+            (#{prize.userId},#{prize.anaId},NOW())
+        </foreach>
+    </insert>
+
 
 </mapper>

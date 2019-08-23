@@ -12,6 +12,10 @@ import java.util.List;
  */
 public interface UserMapper {
 
+    Integer visit(@Param("ip") String ip,
+                  @Param("address") String address,
+                  @Param("device") String device);
+
     Integer userRegister(JSONObject user);
 
     JSONObject userLogin(JSONObject user);
@@ -19,4 +23,9 @@ public interface UserMapper {
     List<JSONObject> getUserList(JSONObject object);
 
     Integer userNameCheckIsRegister(JSONObject user);
+
+    Integer userPrize(JSONObject prize);
+
+    Integer userPrizeList(List<JSONObject> prizeList);
+
 }
