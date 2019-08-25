@@ -90,13 +90,12 @@ public class UserController{
      * 参数 user
      */
     @PostMapping("/userLogin")
-    public Result userLogin(@RequestBody JSONObject user, HttpSession session){
+    public Result userLogin(@RequestBody JSONObject user){
         user.put("userPassword",MD5Util.getMD5String(user.getString("userPassword")));
         Result result = null;
         JSONObject u = userService.userLogin(user);
         if(u != null){
             if(0 == u.getInteger("userDisabled")){
-                session.setAttribute("userSession",u);//放入session中
                 result = ResultGenerator.genSuccessResult(u);
             }else{
                 result = ResultGenerator.genFailResult("您的账号已被限制登陆，请联系管理员!");

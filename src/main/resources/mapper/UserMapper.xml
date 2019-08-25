@@ -9,6 +9,7 @@
         <id property="userName" column="user_name"/>
         <!-- 这里密码就不返回给前台了 -->
         <!-- <id property="userPassword" column="user_password"/> -->
+        <id property="userNickName" column="user_nick_name"/>
         <id property="userMobile" column="user_mobile"/>
         <id property="userSex" column="user_sex"/>
         <id property="userSignature" column="user_signature"/>
@@ -33,14 +34,14 @@
 
     <!-- 用户登录 -->
     <select id="userLogin" resultMap="userResultMap">
-        SELECT `id`,`user_name`,`user_mobile`,`user_sex`,`user_signature`,`create_date`,`user_disabled`
+        SELECT `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_sex`,`user_signature`,`create_date`,`user_disabled`
         FROM `user`
         WHERE user_name = #{userName} and user_password = #{userPassword}
     </select>
 
     <!-- 查询用户列表 searchName userSex userDisabled -->
     <select id="getUserList" resultMap="userResultMap">
-        select `id`,`user_name`,`user_mobile`,`user_sex`,`user_signature`,`create_date`,`user_disabled`
+        select `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_sex`,`user_signature`,`create_date`,`user_disabled`
         FROM `user`
         <where>
             <if test="searchName != '' and searchName != null">

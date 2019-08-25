@@ -48,6 +48,8 @@
         ORDER BY a.`create_date` DESC,a.`id` DESC
     </select>
 
+    <!-- 因为我们取的是倒叙，所以这里上一条下一条也要反一下 -->
+
     <!-- 根据语录ID 获取上条语录 -->
     <select id="getAnaUp" resultMap="anaResultMap">
         SELECT
@@ -55,7 +57,7 @@
             (SELECT COUNT(0) FROM `prize` p WHERE a.id = p.ana_id AND p.user_id = #{userId}) AS isPrize,
             (SELECT COUNT(0) FROM `collect` c WHERE a.id = c.ana_id AND c.user_id = #{userId}) AS isCollect
         FROM `ana` a
-        WHERE id <![CDATA[ < ]]> #{anaId}  ORDER BY id DESC LIMIT 0,1
+        WHERE ana_type_id = #{anaTypeId} AND id <![CDATA[ > ]]> #{anaId} ORDER BY id ASC LIMIT 0,1
     </select>
 
     <!-- 根据语录ID 获取下条语录 -->
@@ -65,7 +67,7 @@
             (SELECT COUNT(0) FROM `prize` p WHERE a.id = p.ana_id AND p.user_id = #{userId}) AS isPrize,
             (SELECT COUNT(0) FROM `collect` c WHERE a.id = c.ana_id AND c.user_id = #{userId}) AS isCollect
         FROM `ana` a
-        WHERE id <![CDATA[ > ]]> #{anaId} ORDER BY id ASC LIMIT 0,1
+        WHERE ana_type_id = #{anaTypeId} AND id <![CDATA[ < ]]> #{anaId}  ORDER BY id DESC LIMIT 0,1
     </select>
 
 </mapper>

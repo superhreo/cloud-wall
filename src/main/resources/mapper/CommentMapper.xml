@@ -20,7 +20,7 @@
 
     <!-- 获取语录的评论 -->
     <select id="getCommentList" resultMap="commentResultMap">
-        SELECT c.*,u.user_name as userName
+        SELECT c.*,u.user_nick_name as userNickName
         FROM `comment` c
         INNER JOIN `user` u ON c.user_id = u.id
         WHERE `ana_id` = #{anaId}
