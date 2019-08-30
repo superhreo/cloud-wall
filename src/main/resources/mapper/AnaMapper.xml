@@ -57,7 +57,13 @@
             (SELECT COUNT(0) FROM `prize` p WHERE a.id = p.ana_id AND p.user_id = #{userId}) AS isPrize,
             (SELECT COUNT(0) FROM `collect` c WHERE a.id = c.ana_id AND c.user_id = #{userId}) AS isCollect
         FROM `ana` a
-        WHERE ana_type_id = #{anaTypeId} AND id <![CDATA[ > ]]> #{anaId} ORDER BY id ASC LIMIT 0,1
+        <where>
+            id <![CDATA[ > ]]> #{anaId}
+            <if test="anaTypeId != 0 and anaTypeId != 1 and anaTypeId != '' and anaTypeId != null">
+                AND a.ana_type_id = #{anaTypeId}
+            </if>
+        </where>
+        ORDER BY id ASC LIMIT 0,1
     </select>
 
     <!-- 根据语录ID 获取下条语录 -->
@@ -67,7 +73,13 @@
             (SELECT COUNT(0) FROM `prize` p WHERE a.id = p.ana_id AND p.user_id = #{userId}) AS isPrize,
             (SELECT COUNT(0) FROM `collect` c WHERE a.id = c.ana_id AND c.user_id = #{userId}) AS isCollect
         FROM `ana` a
-        WHERE ana_type_id = #{anaTypeId} AND id <![CDATA[ < ]]> #{anaId}  ORDER BY id DESC LIMIT 0,1
+        <where>
+            id <![CDATA[ < ]]> #{anaId}
+            <if test="anaTypeId != 0 and anaTypeId != 1 and anaTypeId != '' and anaTypeId != null">
+                AND a.ana_type_id = #{anaTypeId}
+            </if>
+        </where>
+        ORDER BY id DESC LIMIT 0,1
     </select>
 
 </mapper>
