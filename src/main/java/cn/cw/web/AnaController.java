@@ -73,17 +73,17 @@ public class AnaController {
 
     /**
      * 根据分类ID、搜索获取语录
-     * 参数:anaTypeId searchName pageNo pageSize
+     * 参数:anaTypeId searchName current pageSize
      */
     @PostMapping("/getAnaList")
     Result getAnaList(@RequestBody JSONObject object){
-        Integer pageNo = object.getInteger("pageNo");
+        Integer current = object.getInteger("current");
         Integer pageSize = object.getInteger("pageSize");
-        if(pageNo == null || pageSize == null){
-            pageNo = 1;
+        if(current == null || pageSize == null){
+            current = 1;
             pageSize = 10;
         }
-        PageHelper.startPage(pageNo,pageSize);
+        PageHelper.startPage(current,pageSize);
         List<JSONObject> list = anaService.getAnaList(object);
         PageInfo<JSONObject> pageInfo = new PageInfo<JSONObject>(list);
         System.err.println(JSONArray.toJSONStringWithDateFormat(list,"yyyy-MM-dd HH:mm:ss"));

@@ -38,7 +38,7 @@
             (SELECT COUNT(0) FROM `collect` c WHERE a.id = c.ana_id AND c.user_id = #{userId}) AS isCollect
         FROM `ana` a
         <where>
-          <if test="anaTypeId != 0 and anaTypeId != '' and anaTypeId != null">
+          <if test="anaTypeId != 0 and anaTypeId != 1 and anaTypeId != '' and anaTypeId != null">
               a.ana_type_id = #{anaTypeId}
           </if>
           <if test="searchName != '' and searchName != null">

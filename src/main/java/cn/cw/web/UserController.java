@@ -108,21 +108,21 @@ public class UserController{
 
     /**
      * 查询用户信息
-     * 参数: pageNo pageSize searchName userSex userDisabled
+     * 参数: current pageSize searchName userSex userDisabled
      * @return
      */
     @PostMapping("/getUserList")
     Result getUserList(@RequestBody JSONObject object){
         Result result = null;
-        Integer pageNo = object.getInteger("pageNo");
+        Integer current = object.getInteger("current");
         Integer pageSize = object.getInteger("pageSize");
-        if(pageNo == null){
-            pageNo = 1;
+        if(current == null){
+            current = 1;
         }
         if(pageSize == null){
             pageSize = 10;
         }
-        PageHelper.startPage(pageNo,pageSize);
+        PageHelper.startPage(current,pageSize);
         List<JSONObject> list = userService.getUserList(object);
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(new ResultPages(pageInfo));
