@@ -5,6 +5,8 @@ import cn.cw.core.ResultGenerator;
 import cn.cw.core.ResultPages;
 import cn.cw.service.UserService;
 import cn.cw.util.*;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -134,17 +136,37 @@ public class UserController{
      */
     @PostMapping("/userPrize")
     public Result userPrize(@RequestBody JSONObject prize){
-        //加密密码
         Result result = null;
         Integer num = userService.userPrize(prize);
-        if(num == 1){
-            result = ResultGenerator.genSuccessResult("注册成功!");
+        Integer num2 = userService.anaPrizeUpdate(prize);
+        if(num2 == 1){
+            result = ResultGenerator.genSuccessResult("点赞成功!");
         }else{
-            result = ResultGenerator.genFailResult("注册失败!");
+            result = ResultGenerator.genFailResult("点赞失败!");
         }
         return result;
     }
-
+    /**
+     * 添加用户
+     * 参数 user
+     */
+    @PostMapping("/userPrizeList")
+    public Result userPrizeList(@RequestBody JSONArray jsonArray){
+        Result result = null;
+        Integer num = 0;
+        System.out.println(jsonArray);
+        for(int i=0;i<jsonArray.size();i++){
+            JSONObject prize = jsonArray.getJSONObject(i);
+            userService.userPrize(prize);
+            num += userService.anaPrizeUpdate(prize);
+        }
+        if(jsonArray.size() == num){
+            result = ResultGenerator.genSuccessResult("批量点赞成功!");
+        }else{
+            result = ResultGenerator.genFailResult("批量点赞失败!");
+        }
+        return result;
+    }
 //
 //    @PostMapping("/doLoginTest")
 //    public String doLoginTest(User user, HttpSession session) {

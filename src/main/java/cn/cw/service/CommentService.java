@@ -14,5 +14,7 @@ public interface CommentService {
 
     List<JSONObject> getCommentList(JSONObject object);
 
-    Integer addComment(JSONObject object);
+    Integer anaComment(JSONObject object);
+
+    Integer anaCommentUpdate(JSONObject object);
 }

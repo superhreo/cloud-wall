@@ -25,7 +25,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Integer addComment(JSONObject object) {
-        return commentMapper.addComment(object);
+    public Integer anaComment(JSONObject object) {
+        return commentMapper.anaComment(object);
+    }
+
+    @Override
+    public Integer anaCommentUpdate(JSONObject object) {
+        return commentMapper.anaCommentUpdate(object);
     }
 }

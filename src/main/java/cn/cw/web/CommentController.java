@@ -33,11 +33,12 @@ public class CommentController {
      *  评论语录
      * 	参数:comment
      */
-    @PostMapping("/addComment")
-    Result addComment(@RequestBody JSONObject object){
+    @PostMapping("/anaComment")
+    Result anaComment(@RequestBody JSONObject object){
         Result result = null;
-        Integer num = commentService.addComment(object);
-        if(num == 1){
+        Integer num = commentService.anaComment(object);
+        Integer num2 = commentService.anaCommentUpdate(object);
+        if(num2 == 1){
             result = ResultGenerator.genSuccessResult("评论成功!");
         }else{
             result = ResultGenerator.genFailResult("评论失败!");

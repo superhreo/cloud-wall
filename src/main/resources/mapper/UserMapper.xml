@@ -61,6 +61,10 @@
         INSERT INTO `cloud_wall`.`prize` (`user_id`,`ana_id`,`create_date`) VALUES(#{userId},#{anaId},NOW());
     </insert>
 
+    <update id="anaPrizeUpdate">
+        UPDATE `ana` SET prize_num = prize_num + 1 WHERE id = #{anaId};
+    </update>
+
     <!-- 批量点赞 -->
     <insert id="userPrizeList">
         INSERT INTO `cloud_wall`.`prize` (`user_id`,`ana_id`,`create_date`) VALUES

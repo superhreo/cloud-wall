@@ -14,8 +14,13 @@
     </resultMap>
 
     <!-- 用户评论 -->
-    <insert id="addComment">
+    <insert id="anaComment">
         INSERT INTO `comment`(`user_id`,`ana_id`,`comment_content`,`create_date`) VALUES (#{userId},#{anaId},#{commentContent},NOW());
+    </insert>
+
+    <!-- 更新语录评论 -->
+    <insert id="anaCommentUpdate">
+        UPDATE ana SET comment_num = comment_num + 1 WHERE id = #{anaId}
     </insert>
 
     <!-- 获取语录的评论 -->

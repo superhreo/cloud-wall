@@ -26,6 +26,8 @@ public interface UserMapper {
 
     Integer userPrize(JSONObject prize);
 
+    Integer anaPrizeUpdate(JSONObject prize);
+
     Integer userPrizeList(List<JSONObject> prizeList);
 
 }
