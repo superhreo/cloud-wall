@@ -47,17 +47,17 @@ public class CommentController {
 
     /**
      *  根据语录ID 获取当前语录的评论、分页 -- 这里需要userId 主要是看是否点过赞、评论过，我们将从前端传过来，不传也可以，就是没登陆的意思，也能查询到数据，只不过点赞和评论都为0
-     * 	参数:anaId pageNo pageSize
+     * 	参数:anaId current pageSize
      */
     @PostMapping("/getCommentList")
     Result getCommentList(@RequestBody JSONObject object){
-        Integer pageNo = object.getInteger("pageNo");
+        Integer current = object.getInteger("current");
         Integer pageSize = object.getInteger("pageSize");
-        if(pageNo == null || pageSize == null){
-            pageNo = 1;
+        if(current == null || pageSize == null){
+            current = 1;
             pageSize = 10;
         }
-        PageHelper.startPage(pageNo,pageSize);
+        PageHelper.startPage(current,pageSize);
         List<JSONObject> list = commentService.getCommentList(object);
         PageInfo<JSONObject> pageInfo = new PageInfo<JSONObject>(list);
         return ResultGenerator.genSuccessResult(new ResultPages<JSONObject>(pageInfo));
