@@ -19,5 +19,5 @@ public interface AnaMapper {
 
     JSONObject getAnaDown(JSONObject object);
 
-    Integer addAna(JSONObject ana);
+    Integer anaPublic(JSONObject ana);
 }
