@@ -109,6 +109,16 @@ public class UserController{
     }
 
     /**
+     * 用户修改
+     * 参数 user
+     */
+    @PostMapping("/userModify")
+    public Result userModify(@RequestBody JSONObject user){
+        Result result = null;
+        return result;
+    }
+
+    /**
      * 查询用户信息
      * 参数: current pageSize searchName userSex userDisabled
      * @return

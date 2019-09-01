@@ -22,11 +22,11 @@ public class FileController {
 	String upLoadPath = "static"+File.separator+"upLoadFiles" + File.separator;
 
 	//如果不启用WebMvcConfigurer，不给类添加RequestMapping("/user")的话,下面就是配置默认访问页面
-	@GetMapping({"/", "/login.html"})
-	public String index(Model model) {
-		//重定向到 getUserList 请求
-		return "login";
-	}
+	//	@GetMapping({"/", "/login.html"})
+	//	public String index(Model model) {
+	//		//重定向到 getUserList 请求
+	//		return "login";
+	//	}
 
 	/**
 	 * 上传图片
