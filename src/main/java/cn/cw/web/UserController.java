@@ -38,11 +38,11 @@ public class UserController{
      * 参数 user
      */
     @RequestMapping("/visit")
-    public Result visit(HttpServletRequest request){
+    public Result visit(@RequestBody JSONObject object, HttpServletRequest request){
+        Result result = null;
         String ip = IpUtil.getIpAddr(request);
         String address = IpUtil.getRealAddressByIP(ip);
-        String device = DeviceUtil.deviceInfo(request);
-        Result result = null;
+        String device = object.getString("device");
         Integer num = userService.visit(ip,address,device);
         if(num == 1){
             result = ResultGenerator.genSuccessResult(address);
