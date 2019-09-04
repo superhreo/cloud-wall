@@ -17,7 +17,7 @@
     </resultMap>
 
     <!-- 添加语录 -->
-    <insert id="addAna">
+    <insert id="anaPublic">
         INSERT INTO `ana` (`user_id`,`ana_type_id`,`ana_title`,`ana_content`,`ana_from`,`create_date`) VALUES (#{userId},#{anaTypeId},#{anaTitle},#{anaContent},#{anaFrom},now());
     </insert>
 
@@ -38,7 +38,7 @@
             (SELECT COUNT(0) FROM `collect` c WHERE a.id = c.ana_id AND c.user_id = #{userId}) AS isCollect
         FROM `ana` a
         <where>
-          <if test="anaTypeId != 0 and anaTypeId != 1 and anaTypeId != '' and anaTypeId != null">
+          <if test="anaTypeId != 1 and anaTypeId != '' and anaTypeId != null">
               a.ana_type_id = #{anaTypeId}
           </if>
           <if test="searchName != '' and searchName != null">
@@ -59,7 +59,7 @@
         FROM `ana` a
         <where>
             id <![CDATA[ > ]]> #{anaId}
-            <if test="anaTypeId != 0 and anaTypeId != 1 and anaTypeId != '' and anaTypeId != null">
+            <if test="anaTypeId != 1 and anaTypeId != '' and anaTypeId != null">
                 AND a.ana_type_id = #{anaTypeId}
             </if>
         </where>
@@ -75,7 +75,7 @@
         FROM `ana` a
         <where>
             id <![CDATA[ < ]]> #{anaId}
-            <if test="anaTypeId != 0 and anaTypeId != 1 and anaTypeId != '' and anaTypeId != null">
+            <if test="anaTypeId != 1 and anaTypeId != '' and anaTypeId != null">
                 AND a.ana_type_id = #{anaTypeId}
             </if>
         </where>

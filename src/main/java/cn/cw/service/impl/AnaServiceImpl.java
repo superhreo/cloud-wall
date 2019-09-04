@@ -20,8 +20,8 @@ public class AnaServiceImpl implements AnaService {
     AnaMapper anaMapper;
 
     @Override
-    public Integer addAna(JSONObject ana) {
-        return anaMapper.addAna(ana);
+    public Integer anaPublic(JSONObject ana) {
+        return anaMapper.anaPublic(ana);
     }
 
     @Override

@@ -32,10 +32,10 @@ public class AnaController {
      * 添加语录
      * 参数 ana
      */
-    @PostMapping("/addAna")
-    Result addAna(@RequestBody JSONObject ana){
+    @PostMapping("/anaPublic")
+    Result anaPublic(@RequestBody JSONObject ana){
         Result result = null;
-        Integer num = anaService.addAna(ana);
+        Integer num = anaService.anaPublic(ana);
         if(num == 1){
             result = ResultGenerator.genSuccessResult("发表成功!");
         }else{
