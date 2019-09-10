@@ -1,5 +1,6 @@
 package cn.cw.web;
 
+import cn.cw.core.Result;
 import cn.cw.core.ResultGenerator;
 import cn.cw.util.FileUtil;
 import com.alibaba.fastjson.JSON;
@@ -17,6 +18,7 @@ import java.io.*;
  * 文件管理
  */
 @Controller
+@RequestMapping("/file")
 public class FileController {
 
 	String upLoadPath = "static"+File.separator+"upLoadFiles" + File.separator;
@@ -33,10 +35,10 @@ public class FileController {
 	 * @param request
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/uploadImg")
-	public String upload(HttpServletRequest request) {
+	@RequestMapping(value = "/upLoadImg")
+	public Result upLoad(HttpServletRequest request) {
 		String dirPath = request.getSession().getServletContext().getRealPath(upLoadPath);
-		return JSON.toJSONString(FileUtil.upLoadFile(dirPath,request));
+		return FileUtil.upLoadFile(dirPath,request);
 	}
 
 	/**

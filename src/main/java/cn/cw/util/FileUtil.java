@@ -1,5 +1,6 @@
 package cn.cw.util;
 
+import cn.cw.core.Result;
 import cn.cw.core.ResultGenerator;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +28,7 @@ public class FileUtil {
      * @param request request请求
      * @return
      */
-    public static Object upLoadFile(String dirPath, HttpServletRequest request) {
+    public static Result upLoadFile(String dirPath, HttpServletRequest request) {
         try {
             List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
             if (files.size() < 1) {
