@@ -32,6 +32,10 @@
         INSERT INTO `user` (`user_name`,`user_password`,`user_mobile`,`create_date`) VALUES (#{userName},#{userPassword},#{userMobile},NOW());
     </insert>
 
+    <update id="updateHeadImg">
+
+    </update>
+
     <!-- 用户登录 -->
     <select id="userLogin" resultMap="userResultMap">
         SELECT `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_sex`,`user_signature`,`create_date`,`user_disabled`

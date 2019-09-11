@@ -56,4 +56,9 @@ public class UserServiceImpl implements UserService {
     public Integer userPrizeList(List<JSONObject> prizeList) {
         return userMapper.userPrizeList(prizeList);
     }
+
+    @Override
+    public Integer updateHeadImg(Integer userId, String message) {
+        return userMapper.updateHeadImg(userId,message);
+    }
 }

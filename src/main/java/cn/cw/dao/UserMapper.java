@@ -30,4 +30,6 @@ public interface UserMapper {
 
     Integer userPrizeList(List<JSONObject> prizeList);
 
+    Integer updateHeadImg(@Param("userId") Integer userId,@Param("message") String message);
+
 }

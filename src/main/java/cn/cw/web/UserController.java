@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,8 @@ public class UserController{
 
     @Resource
     public UserService userService;
+
+    String upLoadPath = "static"+ File.separator+"upLoadFiles" + File.separator;
 
     /**
      * 访问记录
@@ -119,6 +122,19 @@ public class UserController{
     }
 
     /**
+     * 上传头像
+     * @param request
+     */
+    @RequestMapping(value = "/upLoadHeadImg")
+    public Result upLoadHeadImg(HttpServletRequest request) {
+        Integer userId = Integer.valueOf(request.getParameter("userId"));
+        String dirPath = request.getSession().getServletContext().getRealPath(upLoadPath);
+        Result result = FileUtil.upLoadFile(upLoadPath,dirPath,request);
+        String message = result.getMessage();
+        Integer num = userService.updateHeadImg(userId,message);
+        return result;
+    }
+    /**
      * 查询用户信息
      * 参数: current pageSize searchName userSex userDisabled
      * @return
@@ -177,6 +193,9 @@ public class UserController{
         }
         return result;
     }
+
+
+
 //
 //    @PostMapping("/doLoginTest")
 //    public String doLoginTest(User user, HttpSession session) {
