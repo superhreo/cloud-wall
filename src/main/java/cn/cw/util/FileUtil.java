@@ -47,6 +47,9 @@ public class FileUtil {
             String prefixName = fileName.substring(0, fileName.lastIndexOf("."));
             // 获取后缀名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            if(!suffixName.equalsIgnoreCase(".BMP") && !suffixName.equalsIgnoreCase(".JPG") && !suffixName.equalsIgnoreCase(".JPEG") && !suffixName.equalsIgnoreCase(".PNG")){
+                return ResultGenerator.genFailResult("请选择图片!");
+            }
             //上传到服务器文件名
             fileName = prefixName + "_" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + suffixName;
             // 文件路径
@@ -75,7 +78,7 @@ public class FileUtil {
      * @param response
      * @return
      */
-    public static Object downLoadFile(String fileName, String dirPath, HttpServletResponse response) {
+    public static Result downLoadFile(String fileName, String dirPath, HttpServletResponse response) {
 
         FileInputStream fis = null;
         BufferedInputStream bis = null;

@@ -4,9 +4,11 @@ import cn.cw.core.Result;
 import cn.cw.core.ResultGenerator;
 import cn.cw.util.FileUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import java.io.*;
  * 文件管理
  */
 @Controller
+@ResponseBody
 @RequestMapping("/file")
 public class FileController {
 
@@ -34,7 +37,6 @@ public class FileController {
 	 * 上传图片
 	 * @param request
 	 */
-	@ResponseBody
 	@RequestMapping(value = "/upLoadImg")
 	public Result upLoad(HttpServletRequest request) {
 		String dirPath = request.getSession().getServletContext().getRealPath(upLoadPath);
@@ -45,9 +47,8 @@ public class FileController {
 	 * 文件下载
 	 * @param fileName
 	 */
-	@ResponseBody
 	@RequestMapping("/downLoadFile")
-	public Object downLoadFile(String fileName,HttpServletRequest request, HttpServletResponse response) {
+	public Result downLoadFile(String fileName,HttpServletRequest request, HttpServletResponse response) {
 		String dirPath = request.getSession().getServletContext().getRealPath(upLoadPath);
 		return FileUtil.downLoadFile(fileName,dirPath,response);
 	}
@@ -57,9 +58,8 @@ public class FileController {
 	 * @param fileName
 	 * @return
 	 */
-	@ResponseBody
 	@RequestMapping("/revomeFile")
-	public Object revomeFile(String fileName,HttpServletRequest request){
+	public Result revomeFile(String fileName,HttpServletRequest request){
 		String dirPath = request.getSession().getServletContext().getRealPath(upLoadPath);
 		return ResultGenerator.genSuccessResult(FileUtil.removeFile(fileName,dirPath));
 	}
