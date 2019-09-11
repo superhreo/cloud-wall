@@ -19,7 +19,6 @@ import java.util.List;
  * User: _Cps
  * Date: 2019.05.10 10:06
  */
-@Log4j
 public class FileUtil {
 
     /**
@@ -28,7 +27,7 @@ public class FileUtil {
      * @param request request请求
      * @return
      */
-    public static Result upLoadFile(String dirPath, HttpServletRequest request) {
+    public static Result upLoadFile(String upLoadPath,String dirPath, HttpServletRequest request) {
         try {
             List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
             if (files.size() < 1) {
@@ -47,6 +46,7 @@ public class FileUtil {
             String prefixName = fileName.substring(0, fileName.lastIndexOf("."));
             // 获取后缀名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            System.err.println(suffixName);
             if(!suffixName.equalsIgnoreCase(".BMP") && !suffixName.equalsIgnoreCase(".JPG") && !suffixName.equalsIgnoreCase(".JPEG") && !suffixName.equalsIgnoreCase(".PNG")){
                 return ResultGenerator.genFailResult("请选择图片!");
             }
@@ -55,8 +55,8 @@ public class FileUtil {
             // 文件路径
             String realPath = dirPath + File.separator + fileName;
 
-            log.info(dirPath);
-            log.info("文件大小:" + upLoadFile.getSize() / 1024 + "KB");
+            System.out.println(dirPath);
+            System.out.println("文件大小:" + upLoadFile.getSize() / 1024 + "KB");
 
             File dest = new File(realPath);
             // 检测是否存在目录
@@ -64,7 +64,7 @@ public class FileUtil {
                 dest.getParentFile().mkdirs();// 新建文件夹
             }
             upLoadFile.transferTo(dest);// 文件写入
-            return ResultGenerator.genSuccessResult(fileName);
+            return ResultGenerator.genSuccessResult(File.separator + upLoadPath + fileName);
         } catch (Exception e) {
             return ResultGenerator.genFailResult("出现异常:" + e);
         }

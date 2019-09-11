@@ -39,8 +39,12 @@ public class FileController {
 	 */
 	@RequestMapping(value = "/upLoadImg")
 	public Result upLoad(HttpServletRequest request) {
+		System.err.println("userId:" + request.getParameter("userId"));;
 		String dirPath = request.getSession().getServletContext().getRealPath(upLoadPath);
-		return FileUtil.upLoadFile(dirPath,request);
+		Result result = FileUtil.upLoadFile(upLoadPath,dirPath,request);
+		// 去更新用户的头像信息
+		result.getMessage();
+		return result;
 	}
 
 	/**
