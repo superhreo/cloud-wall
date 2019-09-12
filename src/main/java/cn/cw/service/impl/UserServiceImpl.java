@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer updateHeadImg(Integer userId, String message) {
-        return userMapper.updateHeadImg(userId,message);
+    public Integer updateHeadImg(Integer userId, String userHeadImg) {
+        return userMapper.updateHeadImg(userId,userHeadImg);
     }
 }

@@ -1,6 +1,7 @@
 package cn.cw.web;
 
 import cn.cw.core.Result;
+import cn.cw.core.ResultCode;
 import cn.cw.core.ResultGenerator;
 import cn.cw.core.ResultPages;
 import cn.cw.service.UserService;
@@ -130,8 +131,16 @@ public class UserController{
         Integer userId = Integer.valueOf(request.getParameter("userId"));
         String dirPath = request.getSession().getServletContext().getRealPath(upLoadPath);
         Result result = FileUtil.upLoadFile(upLoadPath,dirPath,request);
-        String message = result.getMessage();
-        Integer num = userService.updateHeadImg(userId,message);
+        if(result.getCode()!=200){
+            // 出现了错误
+            return result;
+        }
+        String userHeadImg = result.getMessage();
+        Integer num = userService.updateHeadImg(userId,userHeadImg);
+        if(num <= 0){
+            result.setCode(ResultCode.FAIL);
+            result.setMessage("修改头像失败!");
+        }
         return result;
     }
     /**

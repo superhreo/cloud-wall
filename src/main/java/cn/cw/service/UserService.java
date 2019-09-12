@@ -29,5 +29,5 @@ public interface UserService{
 
     Integer userPrizeList(List<JSONObject> prizeList);
 
-    Integer updateHeadImg(Integer userId, String message);
+    Integer updateHeadImg(Integer userId, String userHeadImg);
 }

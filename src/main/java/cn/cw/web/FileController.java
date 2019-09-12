@@ -5,6 +5,7 @@ import cn.cw.core.ResultGenerator;
 import cn.cw.util.FileUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,8 @@ import java.io.*;
 @RequestMapping("/file")
 public class FileController {
 
-	String upLoadPath = "static"+File.separator+"upLoadFiles" + File.separator;
+	@Value("${web.upload-path}")
+	private String upLoadPath;
 
 	//如果不启用WebMvcConfigurer，不给类添加RequestMapping("/user")的话,下面就是配置默认访问页面
 	//	@GetMapping({"/", "/login.html"})
@@ -39,7 +41,6 @@ public class FileController {
 	 */
 	@RequestMapping(value = "/upLoadImg")
 	public Result upLoad(HttpServletRequest request) {
-		System.err.println("userId:" + request.getParameter("userId"));;
 		String dirPath = request.getSession().getServletContext().getRealPath(upLoadPath);
 		Result result = FileUtil.upLoadFile(upLoadPath,dirPath,request);
 		// 去更新用户的头像信息

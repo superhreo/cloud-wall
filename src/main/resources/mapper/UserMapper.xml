@@ -13,6 +13,7 @@
         <id property="userMobile" column="user_mobile"/>
         <id property="userSex" column="user_sex"/>
         <id property="userSignature" column="user_signature"/>
+        <id property="userHeadImg" column="user_head_img"/>
         <id property="createDate" column="create_date"/>
         <id property="userDisabled" column="user_disabled"/>
     </resultMap>
@@ -33,19 +34,19 @@
     </insert>
 
     <update id="updateHeadImg">
-
+        UPDATE `user` SET user_head_img = #{userHeadImg} WHERE id = 1
     </update>
 
     <!-- 用户登录 -->
     <select id="userLogin" resultMap="userResultMap">
-        SELECT `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_sex`,`user_signature`,`create_date`,`user_disabled`
+        SELECT `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_sex`,`user_signature`,`user_head_img`,`create_date`,`user_disabled`
         FROM `user`
         WHERE user_name = #{userName} and user_password = #{userPassword}
     </select>
 
     <!-- 查询用户列表 searchName userSex userDisabled -->
     <select id="getUserList" resultMap="userResultMap">
-        select `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_sex`,`user_signature`,`create_date`,`user_disabled`
+        select `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_sex`,`user_signature`,`user_head_img`,`create_date`,`user_disabled`
         FROM `user`
         <where>
             <if test="searchName != '' and searchName != null">

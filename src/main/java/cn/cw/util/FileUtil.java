@@ -46,7 +46,6 @@ public class FileUtil {
             String prefixName = fileName.substring(0, fileName.lastIndexOf("."));
             // 获取后缀名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
-            System.err.println(suffixName);
             if(!suffixName.equalsIgnoreCase(".BMP") && !suffixName.equalsIgnoreCase(".JPG") && !suffixName.equalsIgnoreCase(".JPEG") && !suffixName.equalsIgnoreCase(".PNG")){
                 return ResultGenerator.genFailResult("请选择图片!");
             }
