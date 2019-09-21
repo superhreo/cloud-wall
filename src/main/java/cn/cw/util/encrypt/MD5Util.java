@@ -1,4 +1,4 @@
-package cn.cw.util;
+package cn.cw.util.encrypt;
 
 
 import com.google.common.base.Strings;

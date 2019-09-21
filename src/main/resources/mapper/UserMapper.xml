@@ -11,7 +11,6 @@
         <!-- <id property="userPassword" column="user_password"/> -->
         <id property="userNickName" column="user_nick_name"/>
         <id property="userMobile" column="user_mobile"/>
-        <id property="userSex" column="user_sex"/>
         <id property="userSignature" column="user_signature"/>
         <id property="userHeadImg" column="user_head_img"/>
         <id property="createDate" column="create_date"/>
@@ -33,20 +32,29 @@
         INSERT INTO `user` (`user_name`,`user_password`,`user_mobile`,`create_date`) VALUES (#{userName},#{userPassword},#{userMobile},NOW());
     </insert>
 
-    <update id="updateHeadImg">
-        UPDATE `user` SET user_head_img = #{userHeadImg} WHERE id = 1
-    </update>
 
     <!-- 用户登录 -->
     <select id="userLogin" resultMap="userResultMap">
-        SELECT `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_sex`,`user_signature`,`user_head_img`,`create_date`,`user_disabled`
+        SELECT `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_signature`,`user_head_img`,`create_date`,`user_disabled`
         FROM `user`
         WHERE user_name = #{userName} and user_password = #{userPassword}
     </select>
 
+    <!-- 更换头像 -->
+    <update id="updateHeadImg">
+        UPDATE `user` SET user_head_img = #{userHeadImg} WHERE id = 1
+    </update>
+
+    <!-- 更换头像 -->
+    <update id="userModify">
+        UPDATE `user`
+        SET `user_nick_name` = #{userNickName} , `user_mobile` = #{userMobile}, `user_signature` = #{userSignature}
+        WHERE `id` = #{userId} AND (`user_nick_name` <![CDATA[<>]]> #{userNickName} OR `user_mobile` <![CDATA[<>]]> #{userMobile} OR `user_signature` <![CDATA[<>]]> #{userSignature});
+    </update>
+
     <!-- 查询用户列表 searchName userSex userDisabled -->
     <select id="getUserList" resultMap="userResultMap">
-        select `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_sex`,`user_signature`,`user_head_img`,`create_date`,`user_disabled`
+        select `id`,`user_name`,`user_mobile`,`user_nick_name`,`user_signature`,`user_head_img`,`create_date`,`user_disabled`
         FROM `user`
         <where>
             <if test="searchName != '' and searchName != null">
@@ -60,23 +68,5 @@
             </if>
         </where>
     </select>
-
-    <!-- 用户点赞 -->
-    <insert id="userPrize">
-        INSERT INTO `cloud_wall`.`prize` (`user_id`,`ana_id`,`create_date`) VALUES(#{userId},#{anaId},NOW());
-    </insert>
-
-    <update id="anaPrizeUpdate">
-        UPDATE `ana` SET prize_num = prize_num + 1 WHERE id = #{anaId};
-    </update>
-
-    <!-- 批量点赞 -->
-    <insert id="userPrizeList">
-        INSERT INTO `cloud_wall`.`prize` (`user_id`,`ana_id`,`create_date`) VALUES
-        <foreach collection="list" item="prize" separator=",">
-            (#{prize.userId},#{prize.anaId},NOW())
-        </foreach>
-    </insert>
-
 
 </mapper>

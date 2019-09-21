@@ -1,6 +1,7 @@
 package cn.cw.util;
 
 
+import cn.cw.util.encrypt.MD5Util;
 import com.google.common.base.Strings;
 
 import java.io.UnsupportedEncodingException;

@@ -43,22 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer userPrize(JSONObject prize) {
-        return userMapper.userPrize(prize);
-    }
-
-    @Override
-    public Integer anaPrizeUpdate(JSONObject prize) {
-        return userMapper.anaPrizeUpdate(prize);
-    }
-
-    @Override
-    public Integer userPrizeList(List<JSONObject> prizeList) {
-        return userMapper.userPrizeList(prizeList);
-    }
-
-    @Override
     public Integer updateHeadImg(Integer userId, String userHeadImg) {
         return userMapper.updateHeadImg(userId,userHeadImg);
     }
+
+    @Override
+    public Integer userModify(JSONObject user) {
+        return userMapper.userModify(user);
+    }
+
 }

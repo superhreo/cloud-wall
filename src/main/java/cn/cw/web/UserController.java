@@ -6,6 +6,7 @@ import cn.cw.core.ResultGenerator;
 import cn.cw.core.ResultPages;
 import cn.cw.service.UserService;
 import cn.cw.util.*;
+import cn.cw.util.encrypt.MD5Util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -39,7 +40,7 @@ public class UserController{
 
     /**
      * 访问记录
-     * 参数 user
+     * 参数 device 设备信息
      */
     @RequestMapping("/visit")
     public Result visit(String device, HttpServletRequest request){
@@ -97,7 +98,7 @@ public class UserController{
      */
     @PostMapping("/userLogin")
     public Result userLogin(@RequestBody JSONObject user){
-        user.put("userPassword",MD5Util.getMD5String(user.getString("userPassword")));
+        user.put("userPassword", MD5Util.getMD5String(user.getString("userPassword")));
         Result result = null;
         JSONObject u = userService.userLogin(user);
         if(u != null){
@@ -119,6 +120,12 @@ public class UserController{
     @PostMapping("/userModify")
     public Result userModify(@RequestBody JSONObject user){
         Result result = null;
+        Integer num = userService.userModify(user);
+        if(num == 1){
+            result = ResultGenerator.genSuccessResult("修改成功!");
+        }else{
+            result = ResultGenerator.genFailResult("修改失败!");
+        }
         return result;
     }
 
@@ -165,47 +172,6 @@ public class UserController{
         return ResultGenerator.genSuccessResult(new ResultPages(pageInfo));
     }
 
-    /**
-     * 添加用户
-     * 参数 user
-     */
-    @PostMapping("/userPrize")
-    public Result userPrize(@RequestBody JSONObject prize){
-        Result result = null;
-        Integer num = userService.userPrize(prize);
-        Integer num2 = userService.anaPrizeUpdate(prize);
-        if(num2 == 1){
-            result = ResultGenerator.genSuccessResult("点赞成功!");
-        }else{
-            result = ResultGenerator.genFailResult("点赞失败!");
-        }
-        return result;
-    }
-    /**
-     * 添加用户
-     * 参数 user
-     */
-    @PostMapping("/userPrizeList")
-    public Result userPrizeList(@RequestBody JSONArray jsonArray){
-        Result result = null;
-        Integer num = 0;
-        System.out.println(jsonArray);
-        for(int i=0;i<jsonArray.size();i++){
-            JSONObject prize = jsonArray.getJSONObject(i);
-            userService.userPrize(prize);
-            num += userService.anaPrizeUpdate(prize);
-        }
-        if(jsonArray.size() == num){
-            result = ResultGenerator.genSuccessResult("批量点赞成功!");
-        }else{
-            result = ResultGenerator.genFailResult("批量点赞失败!");
-        }
-        return result;
-    }
-
-
-
-//
 //    @PostMapping("/doLoginTest")
 //    public String doLoginTest(User user, HttpSession session) {
 //        //在User中添加了个验证码字段
@@ -226,62 +192,7 @@ public class UserController{
 //        System.err.println("登陆失败");
 //        return "login";
 //    }
-//
-//    /**
-//     * 以流的方式导出报表(支持多表头)，使用说明参考doc目录下的ExcelPlus导出报表.pdf
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping(value = "/export")
-//    public void export(HttpServletResponse response) throws Exception {
-//
-//        //需要的参数：ExcelMake对象、JSONOject对象、list数据
-//
-//        //sheet名
-//        String sheetName = "用户信息";
-//
-//        //属性配置
-//        String props = "['id', 'userName', 'genderName', 'createDate']";
-//
-//        //表头配置
-//        String row1 = "[{width:'1',height:'3',name:'结算部门'},{width:'1',height:'3',name:'类型'},{width:'6',height:'1',name:'公司账户'}]";
-//        String row2 = "[{width:'3',height:'1',name:'点心'},{width:'3',height:'1',name:'套餐'}]";
-//        String row3 = "[{width:'1',height:'1',name:'刷卡次数'},{width:'1',height:'1',name:'单价'},{width:'1',height:'1',name:'总金额'},{width:'1',height:'1',name:'次数'},{width:'1',height:'1',name:'单价'},{width:'1',height:'1',name:'总金额'}]";
-//
-//        //封装成JSONObject对象
-//        JSONObject data = new JSONObject(){};
-//        data.put("1",row1);
-//        data.put("2",row2);
-//        data.put("3",row3);
-//        data.put("props",props);
-//        data.put("sheetName",sheetName);
-//
-//        //获取数据---为什么是JSONObject对象，看Mapper.xml就理解了
-//        List<JSONObject> list = userService.getUserListJSONObject();
-//
-//        //excel文件名
-//        String fileName = sheetName + System.currentTimeMillis() + ".xls";
-//
-//        //绘制单元格对象
-//        ExcelMake make = new ExcelMake(sheetName);
-//
-//        //创建HSSFWorkbook
-//        HSSFWorkbook wb = new ExcelUtil().getHSSFWorkbook(make, data , list);
-//
-//        //响应到客户端
-//        try {
-//            FileUtil.setResponseHeader(fileName,response);
-//            OutputStream os = response.getOutputStream();
-//            wb.write(os);
-//            os.flush();
-//            os.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//
+
 //    /**
 //     * 生成前端的图片验证码
 //     */

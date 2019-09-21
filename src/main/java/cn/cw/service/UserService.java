@@ -23,11 +23,8 @@ public interface UserService{
 
     Integer userNameCheckIsRegister(JSONObject user);
 
-    Integer userPrize(JSONObject prize);
-
-    Integer anaPrizeUpdate(JSONObject prize);
-
-    Integer userPrizeList(List<JSONObject> prizeList);
-
     Integer updateHeadImg(Integer userId, String userHeadImg);
+
+    Integer userModify(JSONObject user);
+
 }

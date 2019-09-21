@@ -16,20 +16,17 @@ public interface UserMapper {
                   @Param("address") String address,
                   @Param("device") String device);
 
+    Integer userNameCheckIsRegister(JSONObject user);
+
     Integer userRegister(JSONObject user);
 
     JSONObject userLogin(JSONObject user);
 
     List<JSONObject> getUserList(JSONObject object);
 
-    Integer userNameCheckIsRegister(JSONObject user);
-
-    Integer userPrize(JSONObject prize);
-
-    Integer anaPrizeUpdate(JSONObject prize);
-
-    Integer userPrizeList(List<JSONObject> prizeList);
-
     Integer updateHeadImg(@Param("userId") Integer userId,@Param("userHeadImg") String userHeadImg);
+
+    Integer userModify(JSONObject user);
+
 
 }
