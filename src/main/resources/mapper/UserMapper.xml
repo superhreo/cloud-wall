@@ -42,7 +42,7 @@
 
     <!-- 更换头像 -->
     <update id="updateHeadImg">
-        UPDATE `user` SET user_head_img = #{userHeadImg} WHERE id = 1
+        UPDATE `user` SET user_head_img = #{userHeadImg} WHERE id = #{userId}
     </update>
 
     <!-- 更换头像 -->
