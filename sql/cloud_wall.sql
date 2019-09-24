@@ -12,7 +12,7 @@ MySQL - 5.1.73 : Database - cloud_wall
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`cloud_wall` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`cloud_wall` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 
 USE `cloud_wall`;
 
@@ -123,7 +123,7 @@ CREATE TABLE `user` (
   `user_nick_name` varchar(50) DEFAULT '匿名',
   `user_mobile` varchar(50) DEFAULT NULL,
   `user_signature` varchar(200) DEFAULT '默认个性签名...',
-  `user_head_img` varchar(500) NOT NULL,
+  `user_head_img` varchar(500) DEFAULT NULL,
   `create_date` datetime DEFAULT NULL,
   `user_disabled` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -144,11 +144,11 @@ CREATE TABLE `visit` (
   `visit_device` varchar(100) DEFAULT NULL,
   `create_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `visit` */
 
-insert  into `visit`(`id`,`visit_ip`,`visit_address`,`visit_device`,`create_date`) values (1,'116.231.3.207','中国 上海 上海','Windows NT 10.0','2019-09-23 11:59:18'),(2,'116.226.0.200','中国 上海 上海','Windows NT 10.0','2019-09-24 09:09:42'),(3,'116.226.0.200','中国 上海 上海','Windows NT 10.0','2019-09-24 09:28:41');
+insert  into `visit`(`id`,`visit_ip`,`visit_address`,`visit_device`,`create_date`) values (1,'116.231.3.207','中国 上海 上海','Windows NT 10.0','2019-09-23 11:59:18'),(2,'116.226.0.200','中国 上海 上海','Windows NT 10.0','2019-09-24 09:09:42'),(3,'116.226.0.200','中国 上海 上海','Windows NT 10.0','2019-09-24 09:28:41'),(4,'192.168.2.2','内网IP','Windows NT 10.0','2019-09-24 17:37:15'),(5,'192.168.2.2','内网IP','Windows NT 10.0','2019-09-24 17:37:28');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
